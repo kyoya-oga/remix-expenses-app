@@ -1,6 +1,7 @@
 import { Link, Outlet, useLoaderData } from '@remix-run/react';
 import { FaDownload, FaPlus } from 'react-icons/fa';
 import ExpensesList from '~/components/expenses/ExpensesList';
+import { requireUserSession } from '~/data/auth.server';
 import { getExpenses } from '~/data/expenses.server';
 
 export default function ExpensesLayout() {
@@ -37,7 +38,11 @@ export default function ExpensesLayout() {
   );
 }
 
-export async function loader() {
-  const expenses = await getExpenses();
+export async function loader({ request }) {
+  //! important note
+  // This route protection applies to all child routes, but if child routes have loader functions, they will run anyways. So you MUST put the route protection in loader functions inside child routes as well.
+  const userId = await requireUserSession(request);
+
+  const expenses = await getExpenses(userId);
   return expenses;
 }

@@ -2,6 +2,7 @@ import { redirect } from '@remix-run/node';
 import { useNavigate } from '@remix-run/react';
 import ExpenseForm from '~/components/expenses/ExpenseForm';
 import Modal from '~/components/util/Modal';
+import { requireUserSession } from '~/data/auth.server';
 import { deleteExpense, updateExpense } from '~/data/expenses.server';
 import { validateExpenseInput } from '~/data/validation.server';
 
