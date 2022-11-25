@@ -1,3 +1,4 @@
+import { json } from '@remix-run/node';
 import { Link, Outlet, useLoaderData } from '@remix-run/react';
 import { FaDownload, FaPlus } from 'react-icons/fa';
 import ExpensesList from '~/components/expenses/ExpensesList';
@@ -44,5 +45,15 @@ export async function loader({ request }) {
   const userId = await requireUserSession(request);
 
   const expenses = await getExpenses(userId);
-  return expenses;
+  return json(expenses, {
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+  });
+}
+
+export function headers({ actionHeaders, loaderHeaders, parentHeaders }) {
+  return {
+    'Cache-Control': loaderHeaders.get('Cache-Control'),
+  };
 }

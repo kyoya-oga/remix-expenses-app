@@ -46,4 +46,15 @@ export default function Index() {
   );
 }
 
-export function meta() {}
+export function meta() {
+  return {
+    title: 'Remix Expense App - Home',
+  };
+}
+export function headers({ actionHeaders, loaderHeaders, parentHeaders }) {
+  return {
+    'Cache-Control': parentHeaders.get('Cache-Control'),
+  };
+}
+
+export const handle = { disableJS: true };

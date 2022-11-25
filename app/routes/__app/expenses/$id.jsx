@@ -2,7 +2,6 @@ import { redirect } from '@remix-run/node';
 import { useNavigate } from '@remix-run/react';
 import ExpenseForm from '~/components/expenses/ExpenseForm';
 import Modal from '~/components/util/Modal';
-import { requireUserSession } from '~/data/auth.server';
 import { deleteExpense, updateExpense } from '~/data/expenses.server';
 import { validateExpenseInput } from '~/data/validation.server';
 
@@ -39,4 +38,14 @@ export async function action({ params, request }) {
     return { deletedId: expenseId };
   }
   return null;
+}
+
+export function meta({ params, location, data, parentsData }) {
+  const expense = parentsData['routes/__app/expenses'].find(
+    (expense) => expense.id === params.id
+  );
+  return {
+    title: expense.title,
+    description: 'Update expense',
+  };
 }

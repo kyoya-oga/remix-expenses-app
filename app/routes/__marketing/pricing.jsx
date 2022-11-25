@@ -1,4 +1,4 @@
-import { FaTrophy, FaHandshake } from 'react-icons/fa';
+import { FaHandshake, FaTrophy } from 'react-icons/fa';
 
 import PricingPlan from '~/components/marketing/PricingPlan';
 
@@ -39,4 +39,16 @@ export default function PricingPage() {
   );
 }
 
-export function meta() {}
+export function meta() {
+  return {
+    title: 'Remix Expense App - Pricing',
+  };
+}
+
+export function headers({ actionHeaders, loaderHeaders, parentHeaders }) {
+  return {
+    'Cache-Control': parentHeaders.get('Cache-Control'),
+  };
+}
+
+export const handle = { disableJS: true };
